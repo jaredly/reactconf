@@ -1,4 +1,3 @@
-/* action-creators.js */
 import {AppDispatcher} from 'ka-flux';
 const setColor = (userId, color) => {
   postColorChangeToServer(userId, color);
@@ -8,24 +7,17 @@ const setColor = (userId, color) => {
     color: color,
   });
 }
-// other action creators here
-
-/* stores/user-store.js */
 import Flux, {AppDispatcher} from 'ka-flux';
 let users = {1: {color: 'red'}};
-
 const UserStore = Flux.createStore({
   getColor(userId) {
     return users[userId].color
   },
-  // other getters for this store here
-
   dispatcherIndex: AppDispatcher.register(({action}) => {
     switch (action.actionType) {
       case Constants.SET_COLOR:
         users[action.userId] = action.color
         break
-      // handle other actions here
     }
   }),
 });
@@ -33,9 +25,6 @@ const UserStore = Flux.createStore({
 
 /* page.js */
 import {StateFromStore} from 'ka-flux';
-import * as ActionCreators from './action-creators';
-import UserStore from './stores/user-store';
-
 const ColorPageWrapper = React.createClass({
   mixins: [StateFromStore({
     color: {
@@ -45,18 +34,15 @@ const ColorPageWrapper = React.createClass({
         store.getColor(fetchParams.userId)
       ),
     },
-    // other props from stores here
   })],
   render() {
     return <ColorPage
       color={this.state.color}
-      onChangeColor={color => ActionCreators.setColor(
-        this.props.userId,
-        color
-      )}
+      onChangeColor={color =>
+        ActionCreators.setColor(this.props.userId, color)}
     />
   }
 });
-
-/* setup.js */
+// FluxApp has <ColorPageWrapper /> somewhere
 ReactDOM.render(<FluxApp />, node);
+

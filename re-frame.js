@@ -1,16 +1,14 @@
 /* actions.js */
 import {dispatch} from 're-frame';
-export const setColor = (userId, color) => {
+const setColor = (userId, color) => {
   postColorChangeToServer(userId, color);
-  dispaettch('set-color', userId, color);
+  dispatch('set-color', userId, color);
 }
-
 /* handlers.js */
 import {registerHandler} from 're-frame';
 registerHandler('set-color', (state, userId, color) => {
   return setIn(state, ['users', userId, 'color'], color);
 });
-
 /* subscriptions.js */
 import {registerSubscription} from 're-frame';
 registerSubscription('color', (state, userId) => {
@@ -28,6 +26,5 @@ const ColorPageWrapper = ({userId}) => {
     />
   }
 }
-
-/* setup.js */
+// ReFrameApp has <ColorPageWrapper /> somewhere
 ReFrame.render(<ReFrameApp/>, node);

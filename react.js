@@ -30,14 +30,11 @@ const PORCApp = React.createClass({
   },
   render() {
     return <div>
-      ...
       <ColorPage
         color={this.state.users[1].color}
         onChangeColor={color => this.onChangeColor(1, color)}
       />
-      ...
     </div>
   }
 });
-
 ReactDOM.render(<PORCApp />, node);
