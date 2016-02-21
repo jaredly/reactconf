@@ -1,19 +1,19 @@
+
 /* actions.js */
-export const setColor = (userId, color) => {
-  postColorChangeToServer(userId, color);
+export const setColor = color => {
+  postColorChangeToServer(color);
   return {
     type: Constants.SET_COLOR,
-    userId: userId,
-    color: color
+    payload: color
   }
 }
 // other action creators here
 
 /* reducers.js */
-export const rootReducer = (state, {type, userId, color}) => {
+export const rootReducer = (state, {type, payload}) => {
   switch (type) {
     case Constants.SET_COLOR:
-      return setIn(state, ['users', userId, 'color'], color);
+      return {...state, color: payload}
     // handle other actions here
     default:
       return state
@@ -25,16 +25,15 @@ import {connect} from 'react-redux';
 import * as actions from './actions';
 const ColorPageWrapper = connect(
   /* mapStateToProps */
-  (state, props) => ({
-    color: state.users[props.userId].color,
-    // other data this comp might need
+  state => ({
+    color: state.color,
+    // other state this comp might need
   }),
-  /* mapDispatchToProps */
-  (dispatch, props) => ({
-    onChangeColor: color => (
-      dispatch(actions.setColor(props.userId, color))
-    )
-  }),
+  /* actionCreatorProps */
+  {
+    onChangeColor: actions.setColor,
+    // other actions this comp needs to take
+  }
 )(ColorPage)
 
 const ReduxApp = React.createClass({

@@ -1,9 +1,8 @@
 
-import Relay from 'relay';
 const ColorPageWrapper = React.createClass({
   render() {
     return <ColorPage
-      color={this.props.user.color}
+      color={this.props.color}
       onChangeColor={color => {
         Relay.Store.commitUpdate(new ChangeColorMutation({
           color: color
@@ -13,13 +12,11 @@ const ColorPageWrapper = React.createClass({
   }
 });
 
-const ColorPageRelayWrapper =
-Relay.createContainer(ColorPageWrapper, {
+const ColorPageRelayWrapper = Relay.createContainer(ColorPageWrapper, {
   fragments: {
-    user: () => Relay.QL`
+    color: () => Relay.QL`
       fragment on User {
         color
-        ${ChangeColorMutation.getFragment('user')}
       }
     `
   },

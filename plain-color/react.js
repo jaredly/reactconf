@@ -1,9 +1,5 @@
 
-|Users table|
-|id | color |
-|1  | 'red' |
-
-
+// Child component
 const ColorPage = React.createClass({
   render() {
     return <div>
@@ -20,20 +16,18 @@ const ColorPage = React.createClass({
 // Root component that holds the app state
 const PORCApp = React.createClass({
   getInitialState() {
-    return {users: {1: {color: 'red'}}}
+    return {color: 'red'}
   },
-  onChangeColor(userId, color) {
-    postColorChangeToServer(userId, color);
-    this.setState(
-      setIn(this.state, ['users', userId, 'color'], color)
-    );
+  onChangeColor(color) {
+    postColorChangeToServer(color);
+    this.setState({color});
   },
   render() {
     return <div>
       ...
-      <ColorPage
-        color={this.state.users[1].color}
-        onChangeColor={color => this.onChangeColor(1, color)}
+      <ChildComponent
+        color={this.state.color}
+        onChangeColor={color => this.setState({color})}
       />
       ...
     </div>
