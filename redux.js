@@ -22,6 +22,7 @@ const ColorPageWrapper = connect(
   (state, props) => ({
     color: state.users[props.userId].color,
   }),
+
   (dispatch, props) => ({
     onChangeColor: color => (
       dispatch(actions.setColor(props.userId, color))
